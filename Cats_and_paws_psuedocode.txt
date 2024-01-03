@@ -1,0 +1,29 @@
+"""Cats and Paws
+
+Task description
+
+There will be a shopping basket
+
+You will be able to add items to the shopping basket
+
+You will be above to remove items from the shopping basket
+    You can remove a specific item in the basket
+    Or
+    You can clear all items in the basket
+
+total the price of the shopping basket and inform the buyer of the total.
+
+The output will print the recipt format to the user, with the total at the bottom
+# Design a print statement that will display the items, their price and the total of all items at the bottom.
+
+Data structures to use
+
+functions, lists, dictionaires, inputs from the user
+for loops
+while loops
+conditional statements
+
+a menu that will allow the user to enter what action they want to take
+
+Psuedocode
+"""
