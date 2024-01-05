@@ -14,7 +14,7 @@ You will be above to remove items from the shopping basket
 total the price of the shopping basket and inform the buyer of the total.
 
 The output will print the recipt format to the user, with the total at the bottom
-# Design a print statement that will display the items, their price and the total of all items at the bottom.
+# construct a print statement that will display the items, their price and the total of all items at the bottom.
 
 Data structures to use
 
@@ -26,4 +26,22 @@ conditional statements
 a menu that will allow the user to enter what action they want to take
 
 Psuedocode
+
+Create a shopping basket empty list
+Create a list to store the products that can be purchased
+Create a list of items indicating a list of animal products
+Create a list of items that will reflect the price of the animal products
+Create a variable to represent the basket_total_price
+
+animal_tems includes cat food, dog food, cat toy, dog toy, ball, collar (6 items)
+animal_prod_prices includes 5, 5, 20, 20, 7, 5
+
+for each item in animal_products
+
+    create a dictionairy variable for store_items
+    store_items['product'] is animals items
+    store_items['price] is animal_prod_prices
+    append each store_items into store list
+
+output the store list to show the appended dict values.
 """
