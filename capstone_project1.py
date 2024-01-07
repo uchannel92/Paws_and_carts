@@ -1,9 +1,9 @@
 basket_total_price = 0
-shopping_basket = [{'cat food': 2}, {'dog food': 2}]
+shopping_basket = [{'cat food': 2}, {'dog food': 2}, {'collar': 6}, {'bird seeds': 7}, {'door flap': 22},]
 store_products = []
 animal_products = [
-    "cat food", "dog food", "cat toy",
-    "dog toy", "ball", "collar",
+    "Fish food", "hamster wheel", "door flap",
+    "bowl", "bird seeds", "collar",
 ]
 animal_products_price = [
     2, 3, 20, 22,
@@ -18,29 +18,61 @@ for list_value in range(len(animal_products)):
     store_products.append(store_items)   
 
 # display the available store items    
-def show_store_items(list):
+def show_store_items(store_list):
     """ display the items in the store and their prices upon request"""
 
-    print('+'*79)
-    print(f"View our {len(list)} products:\n")
-    for product in list: 
+    # header
+    print('='*30)
+    print(f"View our {len(store_list)} products:\n")
+    print('='*30)
+
+    # items
+    print("Products")
+    print('='*30)
+    for product in store_list: 
         for prod_info, prod_price in product.items():
-            print(f"Product: {prod_info}\nPrice: £{prod_price}\n")
-    print('+'*79)
-show_store = show_store_items(store_products)
+            print(f"{prod_info} -------- Price: £{prod_price}\n")
+    print('='*79)
 
-def total_cart(arg1, arg2):
-    pass
 
+def total_cart(total, basket):
+
+    if len(basket) == 0:
+        print('There are no items in your basket')
+        print('You will now return to the main menu')
+    
+    else:
+
+        # Header
+        print('='*30)
+        print("Your Recipt:")
+        print('='*30)
+
+        # items
+        for product in basket: 
+            for prod_info, prod_price in product.items():
+                total += prod_price
+            
+            print(f"{prod_info} - £{prod_price:.2f}")
+        
+        # total
+        print('-'*30)    
+        print(f"Total: £{total:.2f}")
+        print('='*30)   
+    
 # display the users shopping basket once they add items.
-def display_user_shopping_basket(list):
+def display_user_shopping_basket(user_basket):
 
-    if len(list) < 1:
+    if len(user_basket) < 1:
         print("You have no items in your cart")
     else:
         print("Your shopping cart:\n")
-        for item in list:
+        for item in user_basket:
             print(item)
+"""
+UPDATE **** This for loop to display the shopping cart items with the correct format
+            Loop again using the key and values to get the data listed nicely.
+"""
 
 
 # add a product listed in stock into the basket
@@ -65,29 +97,28 @@ def add_to_cart(user_basket, store_stock):
     print('-'*79)
     return user_basket
 
-
-print(shopping_basket)
-
 def remove_from_cart(user_basket):
 
-    finished_removing = False
+    is_removal_completed = False
 
-    while (not finished_removing):
+    while (not is_removal_completed):
         
         quit_loop = input("Select q to exit or enter any key to contiue: ")
 
         if quit_loop == 'q':
-            finished_removing = True
+            is_removal_completed = True
             print("You will return to the main menu")
         else:
             if len(user_basket) == 0:
-                finished_removing = True
-                print("Your basket is empty.")
+                is_removal_completed = True
+                print("There are no items in your basket.")
             else:   
                 print("Here are the item in your basket:")
                 for index, item in enumerate(user_basket, 1): # start index from pos 1
                     print(index, item)
 
+                # When removing the item from the list, i also need to remove the price from poped item so total is updated..
+                # use method is.numeric() to check if value added is an integer, if not ask again..
                 user_input = len(input("Enter the number of the product you want to REMOVE: "))
                 user_basket.pop(user_input - 1) # subtract 1 from user input so that the user can delete the correct index item.
     print('-'*79)             
@@ -98,10 +129,12 @@ def remove_from_cart(user_basket):
 
 
 # all live variables
-# show_basket = display_user_shopping_basket(shopping_basket)
+# print(shopping_basket)
+# show_store = show_store_items(store_products)
+show_basket = display_user_shopping_basket(shopping_basket)
 # user_add_item = add_to_cart(shopping_basket, store_products)
-remove_product = remove_from_cart(shopping_basket)
-
+# remove_product = remove_from_cart(shopping_basket)
+# check_total = total_cart(basket_total_price, shopping_basket)
 
 """# Serge logic
 shopping_done = False
