@@ -1,8 +1,9 @@
 basket_total_price = 0
-shopping_basket = [{'cat food': 2}, {'dog food': 2}, {'collar': 6}, {'bird seeds': 7}, {'door flap': 22},]
+shopping_basket = [{'cat food': 2}, {'dog food': 2}, {'collar': 6}, {'cuen': 66}, {'bird seeds': 7}, {'door flap': 22},]
+#shopping_basket = []
 store_products = []
 animal_products = [
-    "Fish food", "hamster wheel", "door flap",
+    "fish food", "hamster wheel", "door flap",
     "bowl", "bird seeds", "collar",
 ]
 animal_products_price = [
@@ -32,8 +33,6 @@ def show_store_items(store_list):
     for product in store_list: 
         for prod_info, prod_price in product.items():
             print(f"{prod_info} -------- Price: £{prod_price}\n")
-    print('='*79)
-
 
 def total_cart(total, basket):
 
@@ -58,7 +57,8 @@ def total_cart(total, basket):
         # total
         print('-'*30)    
         print(f"Total: £{total:.2f}")
-        print('='*30)   
+        print('='*30)
+        print(f"\nYou will be emailed shortly to confirm payment details")   
     
 # display the users shopping basket once they add items.
 def display_user_shopping_basket(user_basket):
@@ -89,66 +89,74 @@ def add_to_cart(user_basket, store_stock):
     
     if item_found: #if true add the item to the user basket
         user_basket.append(item_to_buy)
-        print(f"{animal_products[list_value]} has been added to the basket!")
+        print(f"{user_input} has been added to the basket!")
     else:
         print(f"We cannot find your item - {user_input}")
         print("return to the menu and check what we have in stock.")
         print("Also ensure the item you are looking for is spelt properly.")
-    print('-'*79)
+
     return user_basket
 
-def remove_from_cart(user_basket):
+# Remove an item from the cart
+def remove_from_cart(total, user_basket):
 
     is_removal_completed = False
 
     while (not is_removal_completed):
         
-        quit_loop = input("Select q to exit or enter any key to contiue: ")
-
-        if quit_loop == 'q':
-            is_removal_completed = True
-            print("You will return to the main menu")
+        if len(user_basket) == 0:
+            print("There are no items in your basket.")
         else:
-            if len(user_basket) == 0:
-                is_removal_completed = True
-                print("There are no items in your basket.")
-            else:   
-                print("Here are the item in your basket:")
-                for index, item in enumerate(user_basket, 1): # start index from pos 1
-                    print(index, item)
+            # Enter name of product in basket and remove
+            user_input = input("Enter the name of the product you want to REMOVE: ")
+            for position, product in enumerate(user_basket): # start index from pos 0
 
-                # When removing the item from the list, i also need to remove the price from poped item so total is updated..
-                # use method is.numeric() to check if value added is an integer, if not ask again..
-                user_input = len(input("Enter the number of the product you want to REMOVE: "))
-                user_basket.pop(user_input - 1) # subtract 1 from user input so that the user can delete the correct index item.
-    print('-'*79)             
-    # loop through the basket to remove an item
-    # added functionality will include totaling the basket, may require extra param for basket total
-    # user can continuously remove items from the basket by choosing which item to remove by position
-    # if the length of the basket is 0 break the loop and inform the user, basket is empty
+                if user_input in product:
+                    total -= user_basket[position][user_input]
+                    user_basket.pop(position)
+                    print(f"{user_input} has been removed from your basket")
+                    break
+                else:
+                    print('Item is not found')
+                    print('View your basket and check your products')
+                    
+                break # close loop only delete 1 item at a time                               
+        
+    return user_basket
 
-
-# all live variables
-# print(shopping_basket)
-# show_store = show_store_items(store_products)
-show_basket = display_user_shopping_basket(shopping_basket)
-# user_add_item = add_to_cart(shopping_basket, store_products)
-# remove_product = remove_from_cart(shopping_basket)
-# check_total = total_cart(basket_total_price, shopping_basket)
-
-"""# Serge logic
 shopping_done = False
+print("*---* Welcome to the Paws & Cats *---*")
 while (not shopping_done):
-
-    if 'x' == 'something':
+    
+    user_input = input("Menu:\n"
+                      "Option 1: View Store items\n"
+                      "Option 2: View your basket\n"
+                      "Option 3: Add items to basket\n"
+                      "Option 4: Remove items from basket\n"
+                      "Option 5: Checkout\n"
+                      "Option 6: Exit\n"
+                      ": ")
+    print('-'*79)
+    
+    if user_input == '1':
+        show_store = show_store_items(store_products)
+        
+    elif user_input == '2':
+        show_basket = display_user_shopping_basket(shopping_basket)
+        
+    elif user_input == '3':
+        user_add_item = add_to_cart(shopping_basket, store_products)
+        
+    elif user_input == '4':
+        remove_product = remove_from_cart(basket_total_price, shopping_basket)
+        
+    elif user_input == '5':
+        check_total = total_cart(basket_total_price, shopping_basket)
+        
+    elif user_input == '6':
+        print("Goodbye!\nWe hope you enjoyed your visit!")
         shopping_done = True
-        print("Goodbye")
-    pass
-
-# Riaan logic
-user_input = ''
-
-while user_input != 'q':
-
-    if user_input == 'q':
-        break"""
+    else:
+        print("Please enter a vaid menu option.")
+    
+    print('-'*79)
