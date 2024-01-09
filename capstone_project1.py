@@ -1,6 +1,6 @@
 basket_total_price = 0
-shopping_basket = [{'cat food': 2}, {'dog food': 2}, {'collar': 6}, {'cuen': 66}, {'bird seeds': 7}, {'door flap': 22},]
-#shopping_basket = []
+# shopping_basket = [{'cat food': 2}, {'dog food': 2}, {'collar': 6}, {'cuen': 66}, {'bird seeds': 7}, {'door flap': 22},]
+shopping_basket = []
 store_products = []
 animal_products = [
     "fish food", "hamster wheel", "door flap",
@@ -48,8 +48,9 @@ def total_cart(total, basket):
         print('='*30)
 
         # items
-        for product in basket: 
+        for product in basket:
             for prod_info, prod_price in product.items():
+                # print(prod_info)
                 total += prod_price
             
             print(f"{prod_info} - £{prod_price:.2f}")
@@ -100,29 +101,36 @@ def add_to_cart(user_basket, store_stock):
 # Remove an item from the cart
 def remove_from_cart(total, user_basket):
 
-    is_removal_completed = False
+    if len(user_basket) == 0:
+        print('There are no items in your basket, you will return to the menu')
+    else:
+        is_removal_completed = False
+        product_to_find = input("Enter the name of the product you want to REMOVE: ")
+        found_product_price = ''
+        found_product_index = ''
 
-    while (not is_removal_completed):
+        # loop over user basket
+        for basket_index, products in enumerate(user_basket):
+
+            # obtain the index of the located dict. Use the dict key to obtain the value
+            if product_to_find in products:
+                found_product_index = basket_index
+                found_product_price = user_basket[basket_index][product_to_find] # value of the dict key
+                is_removal_completed = True
+                break
+            else:
+                continue
         
-        if len(user_basket) == 0:
-            print("There are no items in your basket.")
+        # remove dict from user basket and subtract linked price from the total
+        if is_removal_completed == True:
+            user_basket.pop(found_product_index)
+            print(f"{product_to_find} - has been removed.")
+            total -= found_product_price # remove the product price from the total
         else:
-            # Enter name of product in basket and remove
-            user_input = input("Enter the name of the product you want to REMOVE: ")
-            for position, product in enumerate(user_basket): # start index from pos 0
-
-                if user_input in product:
-                    total -= user_basket[position][user_input]
-                    user_basket.pop(position)
-                    print(f"{user_input} has been removed from your basket")
-                    break
-                else:
-                    print('Item is not found')
-                    print('View your basket and check your products')
-                    
-                break # close loop only delete 1 item at a time                               
-        
-    return user_basket
+            print(f"Item '{product_to_find}' is not found in your basket")
+            print('View your basket and check your products')
+    
+        return user_basket
 
 shopping_done = False
 print("*---* Welcome to the Paws & Cats *---*")
